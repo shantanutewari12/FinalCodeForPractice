@@ -11,12 +11,12 @@
       crossorigin="anonymous"
     />
     <style>
-      #items li:nth-child(3) {
+      .green-background {
         background-color: green;
       }
 
-      #items li {
-        font-weight: bold;
+      .green-font {
+        color: green;
       }
     </style>
     <title>Item Lister</title>
@@ -42,9 +42,21 @@
           <li class="list-group-item">Item 2</li>
           <li class="list-group-item">Item 3</li>
           <li class="list-group-item">Item 4</li>
-          <li class="list-group-item new-item">New Item</li>
         </ul>
       </div>
     </div>
+
+    <script>
+      // Apply modifications using JavaScript
+      // Change font color to green for the second item
+      var secondItem = document.querySelector("#items li:nth-child(2)");
+      secondItem.classList.add("green-font");
+
+      // Select all odd elements and make their background green
+      var oddItems = document.querySelectorAll("#items li:nth-child(odd)");
+      oddItems.forEach(function (item) {
+        item.classList.add("green-background");
+      });
+    </script>
   </body>
 </html>
