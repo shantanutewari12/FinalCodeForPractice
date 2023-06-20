@@ -47,16 +47,21 @@
     </div>
 
     <script>
-      // Apply modifications using JavaScript
-      // Change font color to green for the second item
-      var secondItem = document.querySelector("#items li:nth-child(2)");
-      secondItem.classList.add("green-font");
+      // Add "Hello" before "Item Lister"
+      var headerTitle = document.getElementById("header-title");
+      var parentElement = headerTitle.parentElement;
 
-      // Select all odd elements and make their background green
-      var oddItems = document.querySelectorAll("#items li:nth-child(odd)");
-      oddItems.forEach(function (item) {
-        item.classList.add("green-background");
-      });
+      var helloText = document.createTextNode("Hello ");
+      parentElement.insertBefore(helloText, headerTitle);
+
+      // Add "Hello" before "Item 1"
+      var itemsList = document.getElementById("items");
+      var parentElement = itemsList.parentElement;
+
+      var newListItem = document.createElement("li");
+      newListItem.textContent = "Hello Item 1";
+
+      itemsList.insertBefore(newListItem, itemsList.firstElementChild);
     </script>
   </body>
 </html>
