@@ -20,6 +20,7 @@
       }
     </style>
     <title>Item Lister</title>
+    
   </head>
   <body>
     <header id="main-header" class="bg-success text-white p-4 mb-3">
@@ -33,71 +34,35 @@
       <div id="main" class="card card-body">
         <h2 class="title">Add Items</h2>
         <form class="form-inline mb-3">
-          <input type="text" class="form-control mr-2" />
+          <input type="text" class="form-control mr-2" placeholder="Item name" />
+          <input type="text" class="form-control mr-2" placeholder="Description" />
           <input type="submit" class="btn btn-dark" value="Submit" />
         </form>
         <h2 class="title">Items</h2>
         <ul id="items" class="list-group">
           <li class="list-group-item">
-            <button
-              class="btn btn-danger float-right"
-              onclick="deleteItem(this)"
-            >
-              Delete
-            </button>
-            <button
-              class="btn btn-warning float-right mr-2"
-              onclick="editItem(this)"
-            >
-              Edit
-            </button>
-            Item 1
+            <button class="btn btn-danger float-right" onclick="deleteItem(this)">Delete</button>
+            <button class="btn btn-warning float-right mr-2" onclick="editItem(this)">Edit</button>
+            Item 1 (This is a description)
           </li>
           <li class="list-group-item">
-            <button
-              class="btn btn-danger float-right"
-              onclick="deleteItem(this)"
-            >
-              Delete
-            </button>
-            <button
-              class="btn btn-warning float-right mr-2"
-              onclick="editItem(this)"
-            >
-              Edit
-            </button>
-            Item 2
+            <button class="btn btn-danger float-right" onclick="deleteItem(this)">Delete</button>
+            <button class="btn btn-warning float-right mr-2" onclick="editItem(this)">Edit</button>
+            Item 2 (This is another description)
           </li>
           <li class="list-group-item">
-            <button
-              class="btn btn-danger float-right"
-              onclick="deleteItem(this)"
-            >
-              Delete
-            </button>
-            <button
-              class="btn btn-warning float-right mr-2"
-              onclick="editItem(this)"
-            >
-              Edit
-            </button>
-            Item 3
+            <button class="btn btn-danger float-right" onclick="deleteItem(this)">Delete</button>
+            <button class="btn btn-warning float-right mr-2" onclick="editItem(this)">Edit</button>
+            Item 3 (This is a third description)
           </li>
           <li class="list-group-item">
-            <button
-              class="btn btn-danger float-right"
-              onclick="deleteItem(this)"
-            >
-              Delete
-            </button>
-            <button
-              class="btn btn-warning float-right mr-2"
-              onclick="editItem(this)"
-            >
-              Edit
-            </button>
-            Item 4
+            <button class="btn btn-danger float-right" onclick="deleteItem(this)">Delete</button>
+            <button class="btn btn-warning float-right mr-2" onclick="editItem(this)">Edit</button>
+            Item 4 (This is a fourth description)
           </li>
+        </ul>
+        <input type="text" class="form-control mb-3" id="search" placeholder="Search" />
+        <ul id="searchResults" class="list-group">
         </ul>
       </div>
     </div>
@@ -116,6 +81,8 @@
 
         alert("Edit item: " + itemText);
       }
-    </script>
-  </body>
-</html>
+
+      function searchItems() {
+        var searchText = document.getElementById("search").value;
+
+        var searchResults = document.
