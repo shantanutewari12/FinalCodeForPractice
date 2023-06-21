@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Adding users to the browser</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      .container {
+        margin: auto;
+        width: 400px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+      h2 {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .cancelbtn {
+        width: auto;
+        padding: 10px 18px;
+        background-color: #f44336;
+      }
+      .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+        position: relative;
+      }
+      img.avatar {
+        width: 40%;
+        border-radius: 50%;
+      }
+      .container form {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+      span.psw {
+        float: right;
+        padding-top: 16px;
+      }
+      @media screen and (max-width: 600px) {
+        .container {
+          width: 80%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Add User</h2>
+      <form action="">
+        <label for="uname"><b>Name</b></label>
+        <input type="text" placeholder="Please enter your name" name="uname" required />
+
+        <label for="psw"><b>Email</b></label>
+        <input
+          type="text"
+          placeholder="Enter Email"
+          name="psw"
+          required
+        />
+
+        <button type="submit">Submit</button>
+        <label>
+      </form>
+
+      <script>
+        function storeUserDetails() {
+          var uname = document.getElementById("uname").value;
+          var psw = document.getElementById("psw").value;
+
+          localStorage.setItem("uname", uname);
+          localStorage.setItem("psw", psw);
+        }
+
+        document.getElementById("submit").addEventListener("click", storeUserDetails);
+      </script>
+    </div>
+  </body>
+</html>
