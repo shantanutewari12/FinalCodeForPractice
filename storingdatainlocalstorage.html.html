@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Adding users to the browser</title>
+    <title>Storing the data in local storage</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -75,33 +75,30 @@
   </head>
   <body>
     <div class="container">
-      <h2>Add User</h2>
-      <form action="">
-        <label for="uname"><b>Name</b></label>
-        <input type="text" placeholder="Please enter your name" name="uname" required />
+      <h2>Registration page</h2>
+      <form>
+        <label for="uname"><b>Email</b></label>
+        <input type="text" placeholder="Enter email" id="uname" required />
 
-        <label for="psw"><b>Email</b></label>
-        <input
-          type="text"
-          placeholder="Enter Email"
-          name="psw"
-          required
-        />
+        <label for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter your name" id="name" required />
 
-        <button type="submit">Submit</button>
-        <label>
+        <label for="phone"><b>Phone number</b></label>
+        <input type="text" placeholder="Enter phone no" id="phone" required />
+
+        <button type="submit" onclick="storeUserDetails()">Submit</button>
       </form>
 
       <script>
         function storeUserDetails() {
           var uname = document.getElementById("uname").value;
-          var psw = document.getElementById("psw").value;
+          var name = document.getElementById("name").value;
+          var phone = document.getElementById("phone").value;
 
           localStorage.setItem("uname", uname);
-          localStorage.setItem("psw", psw);
+          localStorage.setItem("name", name);
+          localStorage.setItem("phone", phone);
         }
-
-        document.getElementById("submit").addEventListener("click", storeUserDetails);
       </script>
     </div>
   </body>
