@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Storing and Deleting Data from Local Storage</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      .container {
+        margin: auto;
+        width: 400px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+      h2 {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .delete-btn {
+        background-color: #f44336;
+      }
+      .delete-btn:hover {
+        background-color: #cc3f33;
+      }
+      .contact-list {
+        list-style: none;
+        padding: 0;
+      }
+      .contact-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .contact-item span {
+        flex-grow: 1;
+      }
+      .contact-item button {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Registration page</h2>
+      <form>
+        <label for="uname"><b>Email</b></label>
+        <input type="text" placeholder="Enter email" id="uname" required />
+
+        <label for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter your name" id="name" required />
+
+        <label for="phone"><b>Phone number</b></label>
+        <input type="text" placeholder="Enter phone no" id="phone" required />
+
+        <button type="submit" onclick="storeUserDetails()">Submit</button>
+      </form>
+
+      <h2>Contacts</h2>
+      <ul id="contactList" class="contact-list"></ul>
+
+      <script>
+        function storeUserDetails() {
+          var uname = document.getElementById("uname").value;
+          var name = document.getElementById("name").value;
+          var phone = document.getElementById("phone").value;
+
+          var contact = {
+            uname: uname,
+            name: name,
+            phone: phone,
+          };
+
+          var contacts = localStorage.getItem("contacts");
+          if (contacts) {
+            contacts = JSON.parse(contacts);
+          } else {
+            contacts = [];
+          }
+
+          contacts.push(contact);
+
+          localStorage.setItem("contacts", JSON.stringify(contacts));
+
+          document.getElementById("uname").value = "";
+          document.getElementById("name").value = "";
+          document.getElementById("phone").value = "";
+          displayContacts();
+        }
+
+        function deleteContact(index) {
+          var contacts = JSON.parse(localStorage.getItem("contacts"));
+
+          localStorage.setItem("contacts", JSON.stringify(contacts));
+
+          displayContacts();
+        }
+
+        function displayContacts() {
+          var contactList = document.getElementById("contactList");
+          contactList.innerHTML = "";
+
+          var contacts = JSON.parse(localStorage.getItem("contacts"));
+
+          if (contacts) {
+            for (var i = 0; i < contacts.length; i++) {
+              var contact = contacts[i];
+              var listItem = document.createElement("li");
+              listItem.className = "contact-item";
+              listItem.innerHTML = `<span>${contact.name}, ${contact.uname}, ${contact.phone}</span><button class="delete-btn" onclick="deleteContact(${i})">Delete</button>`;
+              contactList.appendChild(listItem);
+            }
+          }
+        }
+
+        displayContacts();
+      </script>
+    </div>
+  </body>
+</html>
