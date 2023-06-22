@@ -97,6 +97,7 @@
             phone: phone,
           };
 
+          // Retrieve existing contacts from local storage
           var contacts = localStorage.getItem("contacts");
           if (contacts) {
             contacts = JSON.parse(contacts);
@@ -104,30 +105,59 @@
             contacts = [];
           }
 
-          contacts.push(contact);
+          // Add new contact or update existing contact
+          var existingContactIndex = findContactIndex(contacts, uname);
+          if (existingContactIndex !== -1) {
+            // Update the existing contact
+            contacts[existingContactIndex] = contact;
+          } else {
+            // Add the new contact
+            contacts.push(contact);
+          }
 
+          // Save updated contacts list to local storage
           localStorage.setItem("contacts", JSON.stringify(contacts));
 
+          // Clear input fields
           document.getElementById("uname").value = "";
           document.getElementById("name").value = "";
           document.getElementById("phone").value = "";
+
+          // Update UI
           displayContacts();
         }
 
         function deleteContact(index) {
+          // Retrieve contacts from local storage
           var contacts = JSON.parse(localStorage.getItem("contacts"));
 
+          // Remove the contact at the given index
+          contacts.splice(index, 1);
+
+          // Save updated contacts list to local storage
           localStorage.setItem("contacts", JSON.stringify(contacts));
 
+          // Update UI
           displayContacts();
+        }
+
+        function findContactIndex(contacts, uname) {
+          for (var i = 0; i < contacts.length; i++) {
+            if (contacts[i].uname === uname) {
+              return i;
+            }
+          }
+          return -1;
         }
 
         function displayContacts() {
           var contactList = document.getElementById("contactList");
           contactList.innerHTML = "";
 
+          // Retrieve contacts from local storage
           var contacts = JSON.parse(localStorage.getItem("contacts"));
 
+          // Render each contact in the UI
           if (contacts) {
             for (var i = 0; i < contacts.length; i++) {
               var contact = contacts[i];
@@ -139,6 +169,7 @@
           }
         }
 
+        // Initial display of contacts on page load
         displayContacts();
       </script>
     </div>
