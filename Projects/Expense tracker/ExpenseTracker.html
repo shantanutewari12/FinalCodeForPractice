@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Expense Tracker</h1>
+
+      <!-- Expense Form -->
+      <form id="expenseForm">
+        <div class="form-group">
+          <label>Amount</label>
+          <input type="number" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select class="form-control" required>
+            <option value="">Select category</option>
+            <option value="Food">Food</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addExpense()">
+          Add Expense
+        </button>
+      </form>
+
+      <hr />
+
+      <!-- Expense Summary -->
+      <div id="expenseSummary">
+        <h3>Expense Summary</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="expenseTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+      var expenses = [];
+
+      function addExpense() {
+        var amountInput = document.querySelector(
+          "#expenseForm input[type='number']"
+        );
+        var categorySelect = document.querySelector("#expenseForm select");
+
+        var amount = Number(amountInput.value);
+        var category = categorySelect.value;
+
+        expenses.push({ amount: amount, category: category });
+
+        updateExpenseSummary();
+
+        amountInput.value = "";
+        categorySelect.value = "";
+      }
+
+      function editExpense(index) {
+        var expense = expenses[index];
+        var amountInput = document.querySelector(
+          "#expenseForm input[type='number']"
+        );
+        var categorySelect = document.querySelector("#expenseForm select");
+
+        amountInput.value = expense.amount;
+        categorySelect.value = expense.category;
+      }
+
+      function deleteExpense(index) {
+        expenses.splice(index, 1);
+        updateExpenseSummary();
+      }
+
+      function updateExpenseSummary() {
+        var expenseTableBody = document.getElementById("expenseTableBody");
+        expenseTableBody.innerHTML = "";
+
+        var categoryTotal = {};
+
+        for (var i = 0; i < expenses.length; i++) {
+          var expense = expenses[i];
+          if (!categoryTotal[expense.category]) {
+            categoryTotal[expense.category] = 0;
+          }
+          categoryTotal[expense.category] += expense.amount;
+
+          var row =
+            "<tr><td>" +
+            expense.category +
+            "</td><td>" +
+            expense.amount +
+            "</td><td><button type='button' class='btn btn-sm btn-primary' onclick='editExpense(" +
+            i +
+            ")'>Edit</button><button type='button' class='btn btn-sm btn-danger' onclick='deleteExpense(" +
+            i +
+            ")'>Delete</button></td></tr>";
+
+          expenseTableBody.innerHTML += row;
+        }
+      }
+    </script>
+  </body>
+</html>

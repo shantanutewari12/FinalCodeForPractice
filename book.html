@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My first app</title>
+  </head>
+  <body>
+    <h2>Book an appointment</h2>
+    <style>
+      h2 {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+
+    <form>
+      <label for="Name"><b>Name</b></label>
+      <input type="text" placeholder="Enter your name" id="uname" required />
+      <label for="Phone"><b>Phone no</b></label>
+      <input
+        type="text"
+        placeholder="Enter your phone number"
+        id="phone"
+        required
+      />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
