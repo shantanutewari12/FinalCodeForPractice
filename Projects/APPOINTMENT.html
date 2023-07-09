@@ -129,12 +129,12 @@
               "https://crudcrud.com/api/f7849bb6d50e4ca98f470d35116a1ee7/dataofappointments",
               contact
             )
-            .then((respone) => {
-              console.log(respone);
+            .then((response) => {
+              console.log(response);
             })
 
-            .catch((err) => {
-              console.log(err);
+            .catch((error) => {
+              console.log(error);
             });
           // Clear input fields
           document.getElementById("uname").value = "";
@@ -189,11 +189,10 @@
 
         function displayContacts() {
           var contactList = document.getElementById("contactList");
-          contactList.innerHTML = "";
 
+          contactList.innerHTML = "";
           // Retrieve contacts from local storage
           var contacts = JSON.parse(localStorage.getItem("contacts"));
-
           // Render each contact in the UI
           if (contacts) {
             for (var i = 0; i < contacts.length; i++) {
