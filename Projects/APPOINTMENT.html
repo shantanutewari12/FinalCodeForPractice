@@ -104,26 +104,6 @@
             phone: phone,
           };
 
-          // Retrieve existing contacts from local storage
-          var contacts = localStorage.getItem("contacts");
-          if (contacts) {
-            contacts = JSON.parse(contacts);
-          } else {
-            contacts = [];
-          }
-
-          // Add new contact or update existing contact
-          var existingContactIndex = findContactIndex(contacts, uname);
-          if (existingContactIndex !== -1) {
-            // Update the existing contact
-            contacts[existingContactIndex] = contact;
-          } else {
-            // Add the new contact
-            contacts.push(contact);
-          }
-
-          // Save updated contacts list to local storage    NOW WE ARE SAVOING IT ON CRUDCRUD BACKEND SERVERS
-          // localStorage.setItem("contacts", JSON.stringify(contacts));
           axios
             .post(
               "https://crudcrud.com/api/f7849bb6d50e4ca98f470d35116a1ee7/dataofappointments",
@@ -131,83 +111,78 @@
             )
             .then((response) => {
               console.log(response);
+              document.getElementById("uname").value = "";
+              document.getElementById("name").value = "";
+              document.getElementById("phone").value = "";
+
+              displayContacts();
             })
-
             .catch((error) => {
-              console.log(error);
+              console.error(error);
             });
-          // Clear input fields
-          document.getElementById("uname").value = "";
-          document.getElementById("name").value = "";
-          document.getElementById("phone").value = "";
-
-          // Update UI
-          displayContacts();
         }
 
-        function deleteContact(index) {
-          // Retrieve contacts from local storage
-          var contacts = JSON.parse(localStorage.getItem("contacts"));
-
-          // Remove the contact at the given index
-          contacts.splice(index, 1);
-
-          // Save updated contacts list to local storage
-          localStorage.setItem("contacts", JSON.stringify(contacts));
-
-          // Update UI
-          displayContacts();
+        function deleteContact(id, index) {
+          axios
+            .delete(
+              `https://crudcrud.com/api/f7849bb6d50e4ca98f470d35116a1ee7/dataofappointments/${id}`
+            )
+            .then((response) => {
+              console.log(response);
+              var contactList = document.getElementById("contactList");
+              var listItem = contactList.childNodes[index];
+              contactList.removeChild(listItem);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         }
 
-        function editContact(index) {
-          var contacts = JSON.parse(localStorage.getItem("contacts"));
+        function editContact(id, index) {
+          var contacts = document.getElementsByClassName("contact-item");
           var contact = contacts[index];
 
-          // Populate the form fields with the contact's data
-          document.getElementById("uname").value = contact.uname;
-          document.getElementById("name").value = contact.name;
-          document.getElementById("phone").value = contact.phone;
+          document.getElementById("uname").value =
+            contact.getAttribute("data-uname");
+          document.getElementById("name").value =
+            contact.getAttribute("data-name");
+          document.getElementById("phone").value =
+            contact.getAttribute("data-phone");
 
-          // Remove the contact from the contacts list
-          contacts.splice(index, 1);
-
-          // Save updated contacts list to local storage
-          localStorage.setItem("contacts", JSON.stringify(contacts));
-
-          // Update UI
-          displayContacts();
-        }
-
-        function findContactIndex(contacts, uname) {
-          for (var i = 0; i < contacts.length; i++) {
-            if (contacts[i].uname === uname) {
-              return i;
-            }
-          }
-          return -1;
+          deleteContact(id, index);
         }
 
         function displayContacts() {
           var contactList = document.getElementById("contactList");
 
           contactList.innerHTML = "";
-          // Retrieve contacts from local storage
-          var contacts = JSON.parse(localStorage.getItem("contacts"));
-          // Render each contact in the UI
-          if (contacts) {
-            for (var i = 0; i < contacts.length; i++) {
-              var contact = contacts[i];
-              var listItem = document.createElement("li");
-              listItem.className = "contact-item";
-              listItem.innerHTML = `<span>${contact.name}, ${contact.uname}, ${contact.phone}</span>
-                <button class="edit-btn" onclick="editContact(${i})">Edit</button>
-                <button class="delete-btn" onclick="deleteContact(${i})">Delete</button>`;
-              contactList.appendChild(listItem);
-            }
-          }
+          axios
+            .get(
+              "https://crudcrud.com/api/f7849bb6d50e4ca98f470d35116a1ee7/dataofappointments"
+            )
+            .then((response) => {
+              var contacts = response.data;
+
+              if (contacts) {
+                for (var i = 0; i < contacts.length; i++) {
+                  var contact = contacts[i];
+                  var listItem = document.createElement("li");
+                  listItem.className = "contact-item";
+                  listItem.setAttribute("data-uname", contact.uname);
+                  listItem.setAttribute("data-name", contact.name);
+                  listItem.setAttribute("data-phone", contact.phone);
+                  listItem.innerHTML = `<span>${contact.name}, ${contact.uname}, ${contact.phone}</span>
+                    <button class="edit-btn" onclick="editContact('${contact._id}', ${i})">Edit</button>
+                    <button class="delete-btn" onclick="deleteContact('${contact._id}', ${i})">Delete</button>`;
+                  contactList.appendChild(listItem);
+                }
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
         }
 
-        // Initial display of contacts on page load
         displayContacts();
       </script>
     </div>
