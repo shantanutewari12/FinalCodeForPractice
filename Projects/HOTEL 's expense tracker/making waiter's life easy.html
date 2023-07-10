@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Expense Tracker for Waiter</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <h3>Add Item to Order</h3>
+    <label for="price">Price:</label>
+    <input type="text" id="price" />
+    <label for="dish">Dish:</label>
+    <input type="text" id="dish" />
+    <label for="table">Table:</label>
+    <input type="text" id="table" />
+    <button onclick="addToOrder()">Add to Bill</button>
+
+    <h3>Order</h3>
+    <ul id="orderList"></ul>
+    <button onclick="deleteOrder()">Delete Order</button>
+
+    <script>
+      let order = [];
+
+      function addToOrder() {
+        const price = document.getElementById("price").value;
+        const dish = document.getElementById("dish").value;
+        const table = document.getElementById("table").value;
+
+        if (price !== "" && dish !== "" && table !== "") {
+          const item = {
+            price: price,
+            dish: dish,
+            table: table,
+          };
+
+          order.push(item);
+          displayOrder();
+          resetFields();
+        }
+      }
+
+      function displayOrder() {
+        const orderList = document.getElementById("orderList");
+        orderList.innerHTML = "";
+
+        order.forEach(function (item) {
+          const listItem = document.createElement("li");
+          listItem.innerText =
+            "Price: " +
+            item.price +
+            ", Dish: " +
+            item.dish +
+            ", Table: " +
+            item.table;
+          orderList.appendChild(listItem);
+        });
+      }
+
+      function deleteOrder() {
+        order = [];
+        displayOrder();
+      }
+
+      function resetFields() {
+        document.getElementById("price").value = "";
+        document.getElementById("dish").value = "";
+        document.getElementById("table").value = "";
+      }
+
+      function postData() {
+        axios
+          .post(
+            "https://crudcrud.com/api/27beca463ee546069adda3ac6f5ab475",
+            order
+          )
+          .then(function (response) {
+            console.log("Data posted successfully", response);
+          })
+          .catch(function (error) {
+            console.log("Error posting data", error);
+          });
+      }
+
+      window.onbeforeunload = function () {
+        postData();
+      };
+    </script>
+  </body>
+</html>
